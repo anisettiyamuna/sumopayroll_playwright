@@ -1,0 +1,42 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - link "Sumopayroll Logo" [ref=e3] [cursor=pointer]:
+      - /url: http://localhost/Payroll/Sumo-Payroll/public
+      - img "Sumopayroll Logo" [ref=e4]
+    - generic [ref=e5]:
+      - navigation:
+        - list [ref=e6]:
+          - listitem [ref=e7]:
+            - link "Sign Up" [ref=e8] [cursor=pointer]:
+              - /url: http://localhost/Payroll/Sumo-Payroll/public/signup
+          - listitem [ref=e9]:
+            - link "Login" [ref=e10] [cursor=pointer]:
+              - /url: http://localhost/Payroll/Sumo-Payroll/public/login
+  - generic [ref=e11]:
+    - generic [ref=e12]:
+      - heading "Change Password" [level=3] [ref=e13]
+      - form [ref=e15]:
+        - group [ref=e17]:
+          - paragraph [ref=e19]: We have updated our privacy policies, please update your password before logging into Sumopayroll
+          - textbox "Enter Your Email ID" [ref=e23]: kumar@it.com
+          - textbox "New Password" [ref=e27]: Sumo@123
+          - textbox [active] [ref=e31]:
+            - /placeholder: Confirm Password
+            - text: Sumo@123
+          - button "UPDATE" [ref=e33] [cursor=pointer]
+      - generic [ref=e34]:
+        - heading "Rules for Password:" [level=5] [ref=e35]
+        - list [ref=e36]:
+          - listitem [ref=e37]: Password must contain atleast eight characters
+          - listitem [ref=e38]: Password must contain atleast one lowercase alphabet (a-z)
+          - listitem [ref=e39]: Password must contain atleast one uppercase alphabet (A-Z)
+          - listitem [ref=e40]: Password must contain atleast one numeric value (1-9)
+          - listitem [ref=e41]: Password must contain atleast one special character (!@#$%^&*)
+    - generic [ref=e44]:
+      - text: © 2026
+      - link "Sumopayroll" [ref=e45] [cursor=pointer]:
+        - /url: http://localhost/Payroll/Sumo-Payroll/public
+```

@@ -1,0 +1,14 @@
+{
+  "name": "playwright-framework",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "npx playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "allure-playwright": "^3.6.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1"
+  }
+}
