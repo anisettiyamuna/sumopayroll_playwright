@@ -1,16 +1,16 @@
-const { test } = require('../../fixtures/baseTest');
+const { test } = require('../fixtures/baseTest');
 const { expect } = require('@playwright/test');
 
-test('Login Test', async ({loginPage, page }) => {
-  
-await test.step('Open login page', async () => {
-  await loginPage.navigate();
-});
+test('Login Test', async ({ loginPage, page }) => {
 
-await test.step('Enter credentials', async () => {
-  await loginPage.login(process.env.PAYROLL_USER || 'balu@it.com', process.env.PAYROLL_PASS || 'Spayroll@17');
+  await test.step('Open login page', async () => {
+    await loginPage.navigate();
+  });
 
-  await expect(page).toHaveTitle('Sumopayroll | Dashboard');
-});
+  await test.step('Enter credentials', async () => {
+    await loginPage.login(process.env.PAYROLL_USER || 'balu@it.com', process.env.PAYROLL_PASS || 'Spayroll@17');
+
+    await expect(page).toHaveTitle('Sumopayroll | Dashboard');
+  });
 
 });
