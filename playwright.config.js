@@ -4,15 +4,16 @@ require('dotenv').config();
 module.exports = defineConfig({
   timeout: 30 * 1000,
   expect: {
-    timeout: 50*1000,
+    timeout: 50 * 1000,
   },
-   reporter: [
+  reporter: [
     ['line'],
-    ['allure-playwright']
+    ['allure-playwright'],
+    ['html', { open: 'always' }],// open: 'always' / 'never' / 'on-failure'
   ],
   use: {
     browserName: 'chromium',
-  //  baseURL: process.env.BASE_URL,
+    //  baseURL: process.env.BASE_URL,
     headless: false,
     screenshot: 'on',
     video: 'on',
