@@ -1,10 +1,11 @@
 const { test } = require('../../fixtures/baseTest');
 const { expect } = require('@playwright/test');
 const { getExcelData } = require('../../utils/excelUtil');
-const testdata = getExcelData('ExcelData.xlsx', 'Login');
-
+const testData = getExcelData('ExcelData.xlsx', 'Login');
+const { loginValidAndInvalidData } = require('../../utils/helpers');
 //Valid User Login
-test('Login Test with ENV', async ({ loginPage, page }) => {
+test.only('Login Test with ENV', async ({ loginPage, page }) => {
+  loginValidAndInvalidData();
 
   await test.step('Open login page', async () => {
     // navigate() is already called in the fixture
@@ -25,7 +26,8 @@ test('Login Test with ENV', async ({ loginPage, page }) => {
 
 //Invalid User Login
 
-test('Login Test with Invalid Credentials with ENV', async ({ loginPage }) => {
+test('Login Test with Invalid Credentials with ENV', async ({ loginPage, page }) => {
+
   await test.step('Open login page', async () => {
     // navigate() is already called in the fixture
   });
@@ -42,9 +44,9 @@ test('Login Test with Invalid Credentials with ENV', async ({ loginPage }) => {
 
 //Data driven test using Excel
 
-test.only('Login Test with DDF', async ({ page, testData }) => {
+testData.forEach((data, index) => {
 
-  for (const data of testData) {
+  test(`Login Test - ${index}`, async ({ page }) => {
 
     await page.goto(process.env.BASE_URL || 'http://localhost/Payroll/Sumo-Payroll/public/login');
     const emailInput = page.locator('#email');
@@ -57,7 +59,7 @@ test.only('Login Test with DDF', async ({ page, testData }) => {
     const companyList = page.locator('.login_companies_list');
     const chooseCompany = page.locator('.choose_company');
     const companyLocator = page.locator(`:text("${process.env.Company}")`);
-
+    const emailError = page.locator('#email-error');
 
     await emailInput.fill(data.username);
     await passwordInput.fill(data.password);
@@ -88,11 +90,14 @@ test.only('Login Test with DDF', async ({ page, testData }) => {
     }
     // validation
     if (data.expected === 'success') {
-      await expect(page).toHaveURL('http://localhost/Payroll/Sumo-Payroll/public#/');
-    } else {
+      await expect(page).toHaveURL('http://localhost/Payroll/Sumo-Payroll/public/');
+    } else if (data.expected === 'error') {
       await expect(errorMsg)
         .toContainText('Incorrect Email or Password')
     }
-  }
+    else {
+      await expect(emailError).toContainText('email address');
+    }
+  });
 
 });
