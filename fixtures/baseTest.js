@@ -2,6 +2,8 @@ const base = require('@playwright/test');
 
 const { LoginPage } = require('../pages/LoginPage');
 
+const { getExcelData } = require('../utils/excelUtil');
+
 exports.test = base.test.extend({
 
   // Custom fixture: loginPage
@@ -15,10 +17,10 @@ exports.test = base.test.extend({
     // optional teardown
     console.log("Test completed");
   },
-  
-  dashboardPage: async ({ page }, use) => {
-    const dashboardPage = new DashboardPage(page);
-    await use(dashboardPage);
-  }
 
+  // Custom fixture: testData
+  testData: async ({ }, use) => {
+    const data = getExcelData('ExcelData.xlsx', 'Login');
+    await use(data);
+  }
 });
