@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+const { DashboardPage } = require('./DashboardPage');
 class LoginPage {
   constructor(page) {
     this.page = page;
@@ -12,7 +13,9 @@ class LoginPage {
   }
 
   async getTitle() {
-    return this.page.title();
+    const title = await this.page.title();
+    console.log(`Page title: ${title}`);
+    return title;
   }
 
   async login(username, password, company) {
@@ -62,6 +65,9 @@ class LoginPage {
       console.log("No company selection required, proceeding to dashboard...");
     }
 
+    return new DashboardPage(this.page);
+
   }
+
 }
 module.exports = { LoginPage };

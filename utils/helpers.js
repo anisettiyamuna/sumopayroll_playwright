@@ -22,4 +22,11 @@ function loginValidAndInvalidData() {
 //   testInfo.annotations.push({ type: 'description', description: 'Verification of both valid and invalid login scenarios' });
 
 // }
-module.exports = { logMessage, loginValidAndInvalidData };
+
+function isAt(page, URL) {
+  const currentURL = page.url();
+  return currentURL.includes(URL);
+}
+
+module.exports = { logMessage, loginValidAndInvalidData, isAt };
+
