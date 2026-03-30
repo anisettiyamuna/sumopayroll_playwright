@@ -9,7 +9,7 @@ const { isAt } = require('../utils/helpers');
 testData.forEach((data, index) => {
 
 
-  test.only(`HR Request Test - ${index}`, async ({ loginPage, page }) => {
+  test(`HR Request Test - ${index}`, async ({ loginPage, page }) => {
 
     loginValidAndInvalidData();
     const myReqViewURL = "/hrrequests/user?id=";
@@ -32,19 +32,24 @@ testData.forEach((data, index) => {
 
     const hrRequestTitle = await hrrequestPage.getTitle();
     await expect(hrRequestTitle).toBe('Sumopayroll | Create HR Request');
+
     // Adjust URL as needed
     await hrrequestPage.createHRRequest(data.requestType, data.description);
+    await page.waitForTimeout(2000);
+    const status = await page.locator('span.statusTag.greenTag').textContent();
+    expect(status.trim()).toBe('Open');
 
     const booleanValue = await isAt(page, myReqViewURL);
     await expect(booleanValue).toBe(true);
     console.log(`Current URL contains ${myReqViewURL}: ${booleanValue}`);
 
 
+
   });
 
 });
 
-test(`HR Request Cancellation Test`, async ({ loginPage, page }) => {
+test.only(`HR Request Cancellation Test`, async ({ loginPage, page }) => {
 
   loginValidAndInvalidData();
   const myReqURL = "/hrrequests/user";

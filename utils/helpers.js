@@ -23,9 +23,9 @@ function loginValidAndInvalidData() {
 
 // }
 
-function isAt(page, URL) {
-  const currentURL = page.url();
-  return currentURL.includes(URL);
+async function isAt(page, URL) {
+  const currentURL = await page.url();
+  return await currentURL.includes(URL);
 }
 
 module.exports = { logMessage, loginValidAndInvalidData, isAt };
