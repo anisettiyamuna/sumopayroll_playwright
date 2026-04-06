@@ -4,8 +4,8 @@ const { getExcelData } = require('../utils/excelUtil');
 const testData = getExcelData('ExcelData.xlsx', 'HRrequest');
 const { loginValidAndInvalidData } = require('../utils/helpers');
 const { isAt } = require('../utils/helpers');
-//Data driven test using Excel
 
+//Data driven test using Excel
 testData.forEach((data, index) => {
 
   test(`HR Request Test - ${index}`, async ({ loginPage, page }) => {
@@ -19,7 +19,7 @@ testData.forEach((data, index) => {
     const title = await loginPage.getTitle();
     expect(title).toBe('Welcome to Sumopayroll | Login');
 
-    const dashboardPage = await loginPage.login(process.env.PAYROLL_USER || 'balus@it.com', process.env.PAYROLL_PASS || 'Sumo@123', process.env.Company);
+    const dashboardPage = await loginPage.login(process.env.ADMIN_USERNAME || 'balus@it.com', process.env.ADMIN_PASSWORD || 'Sumo@123', process.env.Company);
 
     // Add steps to navigate to HR Requests and perform actions based on test data
     const getTitle = await dashboardPage.getTitle();
@@ -42,8 +42,6 @@ testData.forEach((data, index) => {
     await expect(booleanValue).toBe(true);
     console.log(`Current URL contains ${myReqViewURL}: ${booleanValue}`);
 
-
-
   });
 
 });
@@ -59,7 +57,7 @@ test(`HR Request Cancellation Test`, async ({ loginPage, page }) => {
   const title = await loginPage.getTitle();
   expect(title).toBe('Welcome to Sumopayroll | Login');
 
-  const dashboardPage = await loginPage.login(process.env.PAYROLL_USER || 'balus@it.com', process.env.PAYROLL_PASS || 'Sumo@123', process.env.Company);
+  const dashboardPage = await loginPage.login(process.env.ADMIN_USERNAME || 'balus@it.com', process.env.ADMIN_PASSWORD || 'Sumo@123', process.env.Company);
 
   // Add steps to navigate to HR Requests and perform actions based on test data
   const getTitle = await dashboardPage.getTitle();
@@ -75,6 +73,7 @@ test(`HR Request Cancellation Test`, async ({ loginPage, page }) => {
   const booleanValue = await isAt(page, myReqURL);
   await expect(booleanValue).toBe(true);
   console.log(`Current URL contains ${myReqURL}: ${booleanValue}`);
+
 });
 
 test.only(`HR Request Validations Test`, async ({ loginPage, page }) => {
@@ -88,7 +87,7 @@ test.only(`HR Request Validations Test`, async ({ loginPage, page }) => {
 
   const title = await loginPage.getTitle();
   expect(title).toBe('Welcome to Sumopayroll | Login');
-  const dashboardPage = await loginPage.login(process.env.PAYROLL_USER || 'balus@it.com', process.env.PAYROLL_PASS || 'Sumo@123', process.env.Company);
+  const dashboardPage = await loginPage.login(process.env.ADMIN_USERNAME || 'balus@it.com', process.env.ADMIN_PASSWORD || 'Sumo@123', process.env.Company);
 
   // Add steps to navigate to HR Requests and perform actions based on test data
   const getTitle = await dashboardPage.getTitle();

@@ -17,7 +17,7 @@ test.only('Login Test with ENV', async ({ loginPage, page }) => {
   });
 
   await test.step('Enter credentials', async () => {
-    await loginPage.login(process.env.PAYROLL_USER || 'balus@it.com', process.env.PAYROLL_PASS || 'Sumo@123', process.env.Company);
+    await loginPage.login(process.env.ADMIN_USERNAME || 'balus@it.com', process.env.ADMIN_PASSWORD || 'Sumo@123', process.env.Company);
 
     await expect(page).toHaveTitle('Sumopayroll | Dashboard');
   });
@@ -67,8 +67,8 @@ testData.forEach((data, index) => {
 
     //Update password flow handling
     if (page.url().includes('password/update')) {
-      await passwordInput.fill(process.env.PAYROLL_PASS);
-      await confirmPassword.fill(process.env.PAYROLL_PASS);
+      await passwordInput.fill(process.env.ADMIN_PASSWORD);
+      await confirmPassword.fill(process.env.ADMIN_PASSWORD);
       await updateBtn.click();
       await loginLink.click();
       await emailInput.fill(data.username);
