@@ -8,7 +8,6 @@ const { isAt } = require('../utils/helpers');
 
 testData.forEach((data, index) => {
 
-
   test(`HR Request Test - ${index}`, async ({ loginPage, page }) => {
 
     loginValidAndInvalidData();
@@ -49,7 +48,7 @@ testData.forEach((data, index) => {
 
 });
 
-test.only(`HR Request Cancellation Test`, async ({ loginPage, page }) => {
+test(`HR Request Cancellation Test`, async ({ loginPage, page }) => {
 
   loginValidAndInvalidData();
   const myReqURL = "/hrrequests/user";
@@ -77,3 +76,38 @@ test.only(`HR Request Cancellation Test`, async ({ loginPage, page }) => {
   await expect(booleanValue).toBe(true);
   console.log(`Current URL contains ${myReqURL}: ${booleanValue}`);
 });
+
+test.only(`HR Request Validations Test`, async ({ loginPage, page }) => {
+
+  loginValidAndInvalidData();
+  const createReqURL = "/hrrequests/create";
+
+  await test.step('Open login page', async () => {
+    // navigate() is already called in the fixture
+  });
+
+  const title = await loginPage.getTitle();
+  expect(title).toBe('Welcome to Sumopayroll | Login');
+  const dashboardPage = await loginPage.login(process.env.PAYROLL_USER || 'balus@it.com', process.env.PAYROLL_PASS || 'Sumo@123', process.env.Company);
+
+  // Add steps to navigate to HR Requests and perform actions based on test data
+  const getTitle = await dashboardPage.getTitle();
+  await expect(getTitle).toBe('Sumopayroll | Dashboard');
+  const hrrequestPage = await dashboardPage.clickOnCreateHRRequest();
+  await expect(page).toHaveURL(/hrrequests.*create/);
+  const hrRequestTitle = await hrrequestPage.getTitle();
+  await expect(hrRequestTitle).toBe('Sumopayroll | Create HR Request');
+
+  //checking create HR request URL after clicking on create HR request button
+  const booleanValue = await isAt(page, createReqURL);
+  await expect(booleanValue).toBe(true);
+  console.log(`Current URL contains ${createReqURL}: ${booleanValue}`);
+
+  await hrrequestPage.validateHRRequestCreation();
+
+});
+
+
+
+
+
