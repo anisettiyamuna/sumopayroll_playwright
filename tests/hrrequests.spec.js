@@ -76,7 +76,7 @@ test(`HR Request Cancellation Test`, async ({ loginPage, page }) => {
 
 });
 
-test.only(`HR Request Validations Test`, async ({ loginPage, page }) => {
+test(`HR Request Validations Test`, async ({ loginPage, page }) => {
 
   loginValidAndInvalidData();
   const createReqURL = "/hrrequests/create";
@@ -106,7 +106,30 @@ test.only(`HR Request Validations Test`, async ({ loginPage, page }) => {
 
 });
 
+test.only(`HR Request creation from User`, async ({ loginPage, page }) => {
+  loginValidAndInvalidData();
+  const myReqViewURL = "/hrrequests/user?id=";
+  await test.step('Open login page', async () => {
+    // navigate() is already called in the fixture
+  });
 
+  const title = await loginPage.getTitle();
+  expect(title).toBe('Welcome to Sumopayroll | Login');
+  const dashboardPage = await loginPage.login(process.env.USER_USERNAME || 'yamuna@yahoo.com', process.env.USER_PASSWORD || 'Sumo@123', process.env.Company);
+  const getTitle = await dashboardPage.getTitle();
+  await expect(getTitle).toBe('Sumopayroll | Dashboard');
+  const hrrequestPage = await dashboardPage.clickOnCreateHRRequest();
+  await expect(page).toHaveURL(/hrrequests.*create/);
+  const hrRequestTitle = await hrrequestPage.getTitle();
+  await expect(hrRequestTitle).toBe('Sumopayroll | Create HR Request');
+  await hrrequestPage.createHRRequest('Advance/Loan', 'Test description from user');
+  await page.waitForTimeout(2000);
+  const status = await page.locator('span.statusTag.greenTag').textContent();
+  expect(status.trim()).toBe('Open');
+  const booleanValue = await isAt(page, myReqViewURL);
+  await expect(booleanValue).toBe(true);
+  console.log(`Current URL contains ${myReqViewURL}: ${booleanValue}`);
+});
 
 
 

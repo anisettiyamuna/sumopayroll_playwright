@@ -29,6 +29,7 @@ class HrrequestPage {
         await expect(this.page.locator('text=offerLetterTemplate.docx')).toBeVisible();
         await fileDescriptionLocator.fill('Test file description');
         await submitBtn.click();
+        await this.page.waitForTimeout(2000);
     }
     async cancelHRRequest() {
 
